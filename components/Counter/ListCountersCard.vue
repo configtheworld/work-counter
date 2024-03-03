@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 m-4">
+  <div class="p-4 m-4 mb-32">
     <h2
       class="text-3xl sm:text-4xl font-semibold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400"
     >
@@ -16,6 +16,28 @@
       <ul
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
       >
+        <li
+          class="h-[140px] bg-white rounded-lg shadow-md opacity-50 cursor-pointer hover:shadow-xl hover:opacity-75 transition-all duration-300"
+          @click="openCreateForm"
+          title="Add new counter"
+        >
+          <div class="relative w-auto h-full">
+            <Icon
+              class="absolute left-[6vw] z-[0]"
+              name="mdi:shape-circle-plus"
+              size="125"
+              color="#949494"
+            />
+
+            <Icon
+              class="absolute top-[43px] left-[6vw] z-[0] ml-9"
+              name="ri:hourglass-2-fill"
+              size="48"
+              color="#848484"
+            />
+          </div>
+        </li>
+
         <li
           v-for="counter in counters"
           :key="counter.id"
@@ -89,7 +111,7 @@
 
 <script setup lang="ts">
 import type { Counter } from "~/types/Counter";
-
+const emit = defineEmits(["openCreateForm"]);
 defineProps({
   counters: { type: Array as PropType<Counter[]>, required: true },
 });
@@ -103,6 +125,10 @@ function calculateTime(minutes: number) {
     (minutesRef > 0 ? minutesRef + " mins left" : "")
   );
 }
+
+const openCreateForm = () => {
+  emit("openCreateForm");
+};
 </script>
 
 <style scoped></style>

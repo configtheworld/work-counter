@@ -23,7 +23,7 @@ const handleDelete = async () => {
     router.currentRoute.value.query.id as string
   );
   if (response === 204) {
-    push.success("Counter successfully deleted");
+    push.success("Counter deleted");
     navigateTo({ path: "/" });
   } else {
     push.error("Failed to delete counter");

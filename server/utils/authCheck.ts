@@ -1,6 +1,6 @@
 import { getAuth } from "firebase-admin/auth";
 
-export async function authCehck(authToken: string) {
+export async function authCheck(authToken: string) {
   let validToken = false;
 
   let userId = "";
@@ -9,6 +9,7 @@ export async function authCehck(authToken: string) {
     try {
       const decodedToken = await getAuth().verifyIdToken(token);
       const uid = decodedToken.uid;
+
       userId = uid;
       validToken = true;
     } catch (error) {

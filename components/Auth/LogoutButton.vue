@@ -16,7 +16,7 @@ import type { UserType } from "~/types/User";
 const logout = () => {
   const userCookie = useCookie<UserType>("user");
   userCookie.value.token = "";
-  push.success("Logged out! See you soon! 👋");
+  push.success("See you soon! 👋");
   navigateTo({ path: "/signin" });
 };
 </script>

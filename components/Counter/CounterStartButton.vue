@@ -130,13 +130,13 @@ const handleTimer = async (timerMinutes: number, propsMinutes: number) => {
         payload.minutes = 0;
         payload.isDone = true;
       } else {
-        push.success(
-          "You have worked for " +
-            timerMinutes +
-            " minutes." +
-            (propsMinutes - onlyAsMinutes.value) +
-            " minutes left"
-        );
+        // push.info(
+        //   "You have worked for " +
+        //     timerMinutes +
+        //     " minutes." +
+        //     (propsMinutes - onlyAsMinutes.value) +
+        //     " minutes left"
+        // );
         const reduceMinutes = propsMinutes - timerMinutes;
         payload.minutes = reduceMinutes;
       }
@@ -149,7 +149,7 @@ const handleTimer = async (timerMinutes: number, propsMinutes: number) => {
       });
 
       if (response.status === 204) {
-        push.success("🙌 Worktime successfully reduced!");
+        push.success("Reduced working hours are saved!");
         emit("updateFlag");
       }
     } catch (error) {

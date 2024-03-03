@@ -1,80 +1,132 @@
 <template>
-  <div class="bg-white p-4 shadow-md rounded-md">
-    <h2 class="text-xl font-semibold mb-4">Create Counter</h2>
+  <div class="absolute inset-0 w-full h-full z-40">
+    <div class="flex flex-row lg:flex-row w-full h-full">
+      <div
+        class="w-0 h-full order-1 md:w-1/2 lg:w-2/3 bg-gray-500 opacity-50 overflow-hidden whitespace-nowrap"
+        @click="toggleSideMenu"
+      ></div>
+      <div
+        class="w-full h-full order-2 md:w-1/2 lg:w-1/3 bg-white p-4 shadow-md rounded-md overflow-hidden whitespace-nowrap"
+      >
+        <h2 class="text-2xl font-semibold mb-4 text-center text-gray-600">
+          Create Counter
+        </h2>
 
-    <div>
-      <form class="max-w-sm mx-auto flex flex-col" @submit.prevent="submitForm">
-        <div class="mb-5">
-          <label for="name">Name:</label>
-          <input type="text" id="name" v-model="formData.name" required />
-        </div>
+        <button
+          title="back"
+          @click="toggleSideMenu"
+          class="absolute md:hidden top-0 left-0 m-2 hover:scale-110"
+        >
+          <Icon
+            name="material-symbols:arrow-left-alt-rounded"
+            color="#343434"
+            size="48"
+          />
+        </button>
 
-        <div class="mb-5">
-          <label for="color">Selected Color:</label>
-          <div class="relative inline-block text-left">
-            <div>
-              <button
-                @click="toggleDropdown"
-                type="button"
-                class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+        <div>
+          <form
+            class="max-w-sm mx-auto flex flex-col"
+            @submit.prevent="submitForm"
+          >
+            <div class="mb-5">
+              <label
+                for="name"
+                class="block mb-2 text-sm font-medium text-gray-900"
+                >Name:</label
               >
-                <span
-                  :class="`flex w-4 h-4 me-4 ${selectedColor} rounded-full`"
-                ></span>
-              </button>
+              <input
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                type="text"
+                id="name"
+                v-model="formData.name"
+                required
+              />
             </div>
-            <div
-              v-show="dropdownOpen"
-              @click="toggleDropdown"
-              class="fixed inset-0 h-full w-full bg-black opacity-25 cursor-default"
-            ></div>
-            <div
-              v-show="dropdownOpen"
-              class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
-            >
-              <div
-                class="py-1"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="options-menu"
+
+            <div class="mb-5">
+              <label
+                for="color"
+                class="block mb-2 text-sm font-medium text-gray-900"
+                >Counter Color:</label
               >
+              <div class="relative inline-block text-left">
+                <div>
+                  <button
+                    @click="toggleDropdown"
+                    type="button"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[35vh] p-2.5"
+                  >
+                    <span
+                      :class="`flex w-30 h-5 me-3 ${selectedColor} rounded-md opacity-75`"
+                    ></span>
+                  </button>
+                </div>
                 <div
-                  v-for="(color, index) in colors"
-                  :key="index"
-                  @click="selectColor(color)"
-                  class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100"
-                  role="menuitem"
+                  v-show="dropdownOpen"
+                  @click="toggleDropdown"
+                  class="fixed inset-0 h-full w-full bg-black opacity-25 cursor-default"
+                ></div>
+                <div
+                  v-show="dropdownOpen"
+                  class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
                 >
-                  <span
-                    :class="`flex w-3 h-3 me-3 ${color} rounded-full`"
-                  ></span>
+                  <div
+                    class="py-1"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="options-menu"
+                  >
+                    <div
+                      v-for="(color, index) in colors"
+                      :key="index"
+                      @click="selectColor(color)"
+                      class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-gray-100"
+                      role="menuitem"
+                    >
+                      <span
+                        :class="`flex w-3 h-3 me-3 ${color} rounded-full`"
+                      ></span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+
+            <div class="mb-5">
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900"
+                for="minutes"
+                >Minutes:</label
+              >
+
+              <div class="w-full">
+                <input
+                  v-for="(n, index) in code"
+                  :id="'input_' + index"
+                  :key="index"
+                  v-model="code[index]"
+                  type="number"
+                  pattern="\d*"
+                  class="border-2 border-gray-300 text-center rounded-lg max-w-[90px] m-1"
+                  maxlength="1"
+                  @input="handleInput"
+                  @keypress="isNumber"
+                  @keydown.delete="handleDelete"
+                  @paste="onPaste"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="py-2.5 px-5 mr-2 mb-2 text-md font-medium text-gray-900 focus:outline-none bg-white rounded-lg border-2 border-gray-300 hover:bg-gray-100 hover:text-gray-600 focus:z-10 focus:ring-4 focus:ring-gray-200"
+            >
+              Submit
+            </button>
+          </form>
         </div>
-
-        <div class="mb-5">
-          <label for="minutes">Minutes:</label>
-
-          <input
-            v-for="(n, index) in code"
-            :id="'input_' + index"
-            :key="index"
-            v-model="code[index]"
-            type="number"
-            pattern="\d*"
-            class="border-2 border-gray-300 text-center rounded-lg max-w-[70px]"
-            maxlength="1"
-            @input="handleInput"
-            @keypress="isNumber"
-            @keydown.delete="handleDelete"
-            @paste="onPaste"
-          />
-        </div>
-
-        <button type="submit">Submit</button>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -87,7 +139,7 @@ const userCookie = useCookie<UserType>("user");
 const code: string[] = Array(4).fill("");
 let dataFromPaste: string[] | undefined;
 const { minutesCalculator } = useCounters();
-const emit = defineEmits(["updateFlag"]);
+const emit = defineEmits(["updateFlag", "openCreateForm"]);
 const keysAllowed: string[] = [
   "0",
   "1",
@@ -230,10 +282,21 @@ const createCounterHandler = async (
     if (response.data.status === 200) {
       push.success("🙌 Counter successfully created!");
       emit("updateFlag");
+      // reset form
+      formData.value = {
+        name: "",
+        color: "",
+        minutes: 0,
+      };
+      emit("openCreateForm");
     }
   } catch (error) {
     console.log(error);
   }
+};
+
+const toggleSideMenu = () => {
+  emit("openCreateForm");
 };
 </script>
 

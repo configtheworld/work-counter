@@ -1,13 +1,13 @@
 import { Counter } from "~/types/Counter";
 import { firestore } from "../utils/firebase";
-import { authCehck } from "../utils/authCheck";
+import { authCheck } from "../utils/authCheck";
 
 export default defineEventHandler(async (event) => {
   const authToken = event.headers.get("Authorization");
   const query = getQuery(event);
 
   if (event.method === "GET") {
-    const { validToken, userId } = await authCehck(authToken ? authToken : "");
+    const { validToken, userId } = await authCheck(authToken ? authToken : "");
 
     const data: Counter[] = [];
     if (validToken) {
@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
     }
     return { message: "counters found", status: 200, payload: data };
   } else if (event.method === "DELETE") {
-    const { validToken, userId } = await authCehck(authToken ? authToken : "");
+    const { validToken, userId } = await authCheck(authToken ? authToken : "");
     if (validToken) {
       firestore
         .collection("counters")
@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
       return { message: "Document is not found", status: 404 };
     }
   } else if (event.method === "PATCH") {
-    const { validToken, userId } = await authCehck(authToken ? authToken : "");
+    const { validToken, userId } = await authCheck(authToken ? authToken : "");
     if (validToken) {
       const body = await readBody(event);
       firestore
