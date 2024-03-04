@@ -12,7 +12,7 @@
     <CounterClock :minutes="props.minutes" />
 
     <div v-if="props.isDone === false">
-      <div>
+      <div v-if="false">
         <h3
           class="text-md sm:text-lg leading-6 font-medium text-center text-gray-700"
         >
@@ -31,9 +31,9 @@
       </div>
       <div class="mx-4">
         <h3
-          class="text-md sm:text-lg leading-6 font-medium text-center text-gray-700"
+          class="text-md sm:text-lg leading-6 font-medium text-center text-gray-700 mx-4 sm:mx-32"
         >
-          or manually reduce your remaining working hours
+          reduce your working hours
         </h3>
         <div>
           <div class="p-4">

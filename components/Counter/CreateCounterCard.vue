@@ -85,7 +85,7 @@
                       role="menuitem"
                     >
                       <span
-                        :class="`flex w-3 h-3 me-3 ${color} rounded-full`"
+                        :class="`flex w-30 h-5 me-3 ${color} rounded-md opacity-75`"
                       ></span>
                     </div>
                   </div>

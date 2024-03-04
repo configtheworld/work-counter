@@ -1,12 +1,12 @@
 import { Counter } from "~/types/Counter";
 import { fbtimestamp, firestore } from "../utils/firebase";
-import { authCehck } from "../utils/authCheck";
+import { authCheck } from "../utils/authCheck";
 
 export default defineEventHandler(async (event) => {
   const authToken = event.headers.get("Authorization");
 
   if (event.method === "GET") {
-    const { validToken, userId } = await authCehck(authToken ? authToken : "");
+    const { validToken, userId } = await authCheck(authToken ? authToken : "");
 
     const data: Counter[] = [];
 
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
 
     return { message: "counters found", status: 200, payload: data };
   } else if (event.method === "POST") {
-    const { validToken, userId } = await authCehck(authToken ? authToken : "");
+    const { validToken, userId } = await authCheck(authToken ? authToken : "");
 
     if (validToken) {
       const body = await readBody(event);

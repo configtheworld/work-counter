@@ -14,9 +14,9 @@
         </div>
       </div>
       <h1
-        class="font-bold mb-4 text-center leading-tight text-transparent text-5xl bg-clip-text bg-gradient-to-r from-gray-500 via-gray-700 to-gray-500"
+        class="font-bold mb-4 text-center leading-tight text-transparent text-4xl sm:text-5xl bg-clip-text bg-gradient-to-r from-gray-500 via-gray-700 to-gray-500"
       >
-        Manage your working hours
+        Manage your working hours <br />
         <span
           class="bg-clip-text bg-gradient-to-r from-blue-500 via-blue-600 to-blue-500"
           >free</span
@@ -28,7 +28,7 @@
         >
         way
       </h1>
-      <h2 class="text-2xl my-4 text-gray-700">
+      <h2 class="text-2xl my-4 text-gray-700 text-center">
         Signin with your Google Account
       </h2>
       <div>

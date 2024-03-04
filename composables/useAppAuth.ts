@@ -11,7 +11,6 @@ export const useAppAuth = () => {
     const res = await signInWithPopup(auth, provider)
       .then(async (result) => {
         if (result !== null) {
-          console.log(result);
           const credential = GoogleAuthProvider.credentialFromResult(result);
           if (credential !== null) {
             const token = credential.accessToken;
